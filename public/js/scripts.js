@@ -71,17 +71,29 @@ function displayUploadedFiles(files) {
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileItem = document.createElement('div');
-        fileItem.className = 'col-3';
-        
+        fileItem.className = 'col-3 mb-3';
+
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.className = 'thumbnail-container';
+
         const thumbnail = document.createElement('img');
         thumbnail.className = 'thumbnail';
         thumbnail.src = URL.createObjectURL(file);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'X';
+        deleteButton.addEventListener('click', () => {
+            fileItem.remove();
+        });
 
         const fileDetails = document.createElement('div');
         fileDetails.className = 'alert alert-success mt-2';
         fileDetails.textContent = `File: ${file.name} (Size: ${file.size} bytes)`;
 
-        fileItem.appendChild(thumbnail);
+        thumbnailContainer.appendChild(thumbnail);
+        thumbnailContainer.appendChild(deleteButton);
+        fileItem.appendChild(thumbnailContainer);
         fileItem.appendChild(fileDetails);
         uploadedFiles.appendChild(fileItem);
     }
